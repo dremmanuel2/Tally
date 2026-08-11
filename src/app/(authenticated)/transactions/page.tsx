@@ -179,8 +179,8 @@ export default function TransactionsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t("transaction.title")}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold">{t("transaction.title")}</h1>
         <div className="flex gap-2">
           <button
             onClick={openExportDialog}
@@ -202,7 +202,7 @@ export default function TransactionsPage() {
         <select
           value={filterMonth}
           onChange={(e) => setFilterMonth(e.target.value)}
-          className="px-3 py-2 border rounded-lg text-sm"
+          className="px-3 py-2 border rounded-lg text-sm w-full sm:w-auto"
         >
           <option value="">{t("transaction.allTime")}</option>
           <option value="custom">{t("transaction.custom")}</option>
@@ -217,13 +217,13 @@ export default function TransactionsPage() {
           })}
         </select>
         {filterMonth === "custom" && (
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
             <input
               type="date"
               value={filterStart}
               max={filterEnd || undefined}
               onChange={(e) => setFilterStart(e.target.value)}
-              className="px-3 py-2 border rounded-lg text-sm"
+              className="px-3 py-2 border rounded-lg text-sm w-full sm:w-auto"
             />
             <span className="text-sm text-gray-400">~</span>
             <input
@@ -231,14 +231,14 @@ export default function TransactionsPage() {
               value={filterEnd}
               min={filterStart || undefined}
               onChange={(e) => setFilterEnd(e.target.value)}
-              className="px-3 py-2 border rounded-lg text-sm"
+              className="px-3 py-2 border rounded-lg text-sm w-full sm:w-auto"
             />
           </div>
         )}
         <select
           value={filterCard}
           onChange={(e) => setFilterCard(e.target.value)}
-          className="px-3 py-2 border rounded-lg text-sm"
+          className="px-3 py-2 border rounded-lg text-sm w-full sm:w-auto"
         >
           <option value="">{t("dashboard.allCards")}</option>
           {cards.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -258,10 +258,10 @@ export default function TransactionsPage() {
 
       <div className="space-y-2">
         {transactions.map((tx) => (
-          <div key={tx.id} className="bg-white border rounded-lg p-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div key={tx.id} className="bg-white border rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex items-start gap-3 min-w-0">
               {getTxBadge(tx)}
-              {getTxDisplay(tx)}
+              <div className="min-w-0">{getTxDisplay(tx)}</div>
             </div>
             <div className="flex gap-2">
               <button onClick={() => openEdit(tx)} className="px-3 py-1 text-sm border rounded hover:bg-gray-50">
@@ -277,7 +277,7 @@ export default function TransactionsPage() {
 
       {showExportDialog && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]"
           onClick={() => setShowExportDialog(false)}
         >
           <div
@@ -328,10 +328,10 @@ export default function TransactionsPage() {
             )}
 
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowExportDialog(false)} className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
+              <button onClick={() => setShowExportDialog(false)} className="flex-1 sm:flex-none px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
                 {t("transaction.cancel")}
               </button>
-              <button onClick={handleDoExport} disabled={exporting} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50">
+              <button onClick={handleDoExport} disabled={exporting} className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50">
                 {exporting ? "..." : t("transaction.exportPdf")}
               </button>
             </div>

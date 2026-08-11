@@ -81,8 +81,8 @@ export default function BankCardsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t("bankCard.title")}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold">{t("bankCard.title")}</h1>
         <button
           onClick={() => { resetForm(); setShowForm(true) }}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"
@@ -153,10 +153,10 @@ export default function BankCardsPage() {
 
       <div className="space-y-2">
         {cards.map((card) => (
-          <div key={card.id} className="bg-white border rounded-lg p-4 flex items-center justify-between">
-            <div>
-              <p className="font-medium">{card.name}</p>
-              <p className="text-sm text-gray-500">
+          <div key={card.id} className="bg-white border rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="min-w-0">
+              <p className="font-medium break-all">{card.name}</p>
+              <p className="text-sm text-gray-500 break-all">
                 {card.type === "DEBIT" ? t("bankCard.debit") : t("bankCard.credit")}
                 {card.cardNumber && ` · ${card.cardNumber}`}
               </p>

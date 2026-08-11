@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { ReactNode } from "react"
 import Sidebar from "./Sidebar"
 import Header from "./Header"
+import MobileNav from "./MobileNav"
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession()
@@ -26,8 +27,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header user={session?.user} />
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">{children}</main>
       </div>
+      <MobileNav />
     </div>
   )
 }

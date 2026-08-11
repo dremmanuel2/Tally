@@ -18,7 +18,7 @@ export default function Sidebar() {
   const { locale, setLocale } = useLocale()
 
   return (
-    <aside className="w-56 bg-white border-r min-h-screen flex flex-col">
+    <aside className="hidden md:flex w-56 bg-white border-r min-h-screen flex-col">
       <div className="p-4 border-b">
         <Link href="/dashboard" className="text-lg font-bold">
           Tally

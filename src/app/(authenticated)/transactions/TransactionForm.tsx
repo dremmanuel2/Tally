@@ -178,13 +178,13 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
 
   return (
     <div className="space-y-3">
-      <div className="flex gap-1 border-b">
+      <div className="flex border-b">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setFormType(tab.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            className={`flex-1 px-2 sm:px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
               formType === tab.key
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-gray-500 hover:text-gray-700"
@@ -197,21 +197,21 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
 
       {(formType === "INCOME" || formType === "EXPENSE") && (
         <>
-          <div className="flex gap-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.amount")}</label>
               <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm" required />
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.currency")}</label>
               <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                 {currencies.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
           </div>
-          <div className="flex gap-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.card")}</label>
               <select value={cardId} onChange={(e) => {
                 setCardId(e.target.value)
@@ -222,7 +222,7 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
                 {cards.map((c) => <option key={c.id} value={c.id}>{cardLabel(c)}</option>)}
               </select>
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.dateTime")}</label>
               <input type="datetime-local" value={dateTime} onChange={(e) => setDateTime(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm" required />
@@ -233,15 +233,15 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
 
       {formType === "TRANSFER" && (
         <>
-          <div className="flex gap-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.fromCard")}</label>
               <select value={cardId} onChange={(e) => setCardId(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                 <option value="">-</option>
                 {cards.map((c) => <option key={c.id} value={c.id}>{cardLabel(c)}</option>)}
               </select>
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.toCard")}</label>
               <div className="flex gap-2">
                 <select
@@ -270,19 +270,19 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
               )}
             </div>
           </div>
-          <div className="flex gap-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.amount")}</label>
               <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm" required />
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.currency")}</label>
               <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                 {currencies.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.dateTime")}</label>
               <input type="datetime-local" value={dateTime} onChange={(e) => setDateTime(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm" required />
@@ -293,15 +293,15 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
 
       {formType === "EXCHANGE" && (
         <>
-          <div className="flex gap-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.card")}</label>
               <select value={cardId} onChange={(e) => setCardId(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                 <option value="">-</option>
                 {cards.map((c) => <option key={c.id} value={c.id}>{cardLabel(c)}</option>)}
               </select>
             </div>
-            <div className="flex-1">
+            <div>
               <label className="block text-sm font-medium mb-1">{t("transaction.dateTime")}</label>
               <input type="datetime-local" value={dateTime} onChange={(e) => setDateTime(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg text-sm" required />
@@ -311,13 +311,13 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-blue-700">{t("transaction.exchangeFrom")}</span>
             </div>
-            <div className="flex gap-4">
-              <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
                 <label className="block text-sm font-medium mb-1">{t("transaction.amount")}</label>
                 <input type="number" step="0.01" value={exchangeFromAmount} onChange={(e) => setExchangeFromAmount(e.target.value)}
                   className="w-full px-3 py-2 border rounded-lg text-sm" />
               </div>
-              <div className="flex-1">
+              <div>
                 <label className="block text-sm font-medium mb-1">{t("transaction.currency")}</label>
                 <select value={exchangeFromCurrency} onChange={(e) => setExchangeFromCurrency(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                   {currencies.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -332,13 +332,13 @@ export default function TransactionForm({ editTx, cards, onSave, onCancel }: Pro
                   className="w-24 px-2 py-1 border rounded text-sm bg-gray-50" />
               </div>
             </div>
-            <div className="flex gap-4">
-              <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
                 <label className="block text-sm font-medium mb-1">{t("transaction.amount")}</label>
                 <input type="number" step="0.01" value={exchangeToAmount} onChange={(e) => setExchangeToAmount(e.target.value)}
                   className="w-full px-3 py-2 border rounded-lg text-sm" />
               </div>
-              <div className="flex-1">
+              <div>
                 <label className="block text-sm font-medium mb-1">{t("transaction.currency")}</label>
                 <select value={exchangeToCurrency} onChange={(e) => setExchangeToCurrency(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                   {currencies.map((c) => <option key={c} value={c}>{c}</option>)}

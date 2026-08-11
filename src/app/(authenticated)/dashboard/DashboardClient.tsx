@@ -105,10 +105,10 @@ export default function DashboardClient() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">{t("dashboard.title")}</h1>
+      <h1 className="text-xl md:text-2xl font-bold mb-6">{t("dashboard.title")}</h1>
 
       <div className="bg-white border rounded-lg p-4 mb-6">
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
           {presets.map((p) => (
             <button
               key={p.key}
@@ -123,19 +123,19 @@ export default function DashboardClient() {
           <select
             value={filterCard}
             onChange={(e) => setFilterCard(e.target.value)}
-            className="ml-auto px-3 py-1.5 text-sm border rounded-md"
+            className="px-3 py-1.5 text-sm border rounded-md w-full sm:w-auto sm:ml-auto"
           >
             <option value="">{t("dashboard.allCards")}</option>
             {cards.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
         {preset === "custom" && (
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)}
-              className="px-3 py-1.5 text-sm border rounded-md" />
+              className="px-3 py-1.5 text-sm border rounded-md w-full sm:w-auto" />
             <span className="text-sm text-gray-400 self-center">~</span>
             <input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)}
-              className="px-3 py-1.5 text-sm border rounded-md" />
+              className="px-3 py-1.5 text-sm border rounded-md w-full sm:w-auto" />
           </div>
         )}
       </div>
@@ -143,7 +143,7 @@ export default function DashboardClient() {
       {stats && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-white rounded-lg p-6 border">
+            <div className="bg-white rounded-lg p-5 md:p-6 border">
               <p className="text-sm text-gray-500">{t("dashboard.income")}</p>
               {Object.keys(stats.income).length > 0 ? (
                 Object.entries(stats.income).map(([curr, amt]) => (
@@ -153,7 +153,7 @@ export default function DashboardClient() {
                 <p className="text-xl font-bold text-green-600">¥ 0.00</p>
               )}
             </div>
-            <div className="bg-white rounded-lg p-6 border">
+            <div className="bg-white rounded-lg p-5 md:p-6 border">
               <p className="text-sm text-gray-500">{t("dashboard.expense")}</p>
               {Object.keys(stats.expense).length > 0 ? (
                 Object.entries(stats.expense).map(([curr, amt]) => (
@@ -163,7 +163,7 @@ export default function DashboardClient() {
                 <p className="text-xl font-bold text-red-600">¥ 0.00</p>
               )}
             </div>
-            <div className="bg-white rounded-lg p-6 border">
+            <div className="bg-white rounded-lg p-5 md:p-6 border">
               <p className="text-sm text-gray-500">{t("dashboard.net")}</p>
               {Object.keys(stats.net).length > 0 ? (
                 Object.entries(stats.net).map(([curr, amt]) => (
@@ -182,8 +182,8 @@ export default function DashboardClient() {
             {balances.length > 0 ? (
               <div className="space-y-2">
                 {balances.map((card) => (
-                  <div key={card.id} className="flex items-center justify-between py-2 border-b last:border-0">
-                    <span className="text-sm font-medium">{card.name}{card.cardNumber ? ` (${card.cardNumber.slice(0, 4)})` : ""}</span>
+                  <div key={card.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 py-2 border-b last:border-0">
+                    <span className="text-sm font-medium break-all">{card.name}{card.cardNumber ? ` (${card.cardNumber.slice(0, 4)})` : ""}</span>
                     <div className="text-right text-sm">
                       {Object.keys(card.balance).length > 0 ? (
                         Object.entries(card.balance).map(([cur, amt]) => (
@@ -208,10 +208,10 @@ export default function DashboardClient() {
             {Object.keys(stats.byCard).length > 0 ? (
               <div className="space-y-2">
                 {Object.entries(stats.byCard).map(([key, card]) => (
-                  <div key={key} className="flex items-center justify-between py-2 border-b last:border-0">
-                    <span className="text-sm font-medium">{card.name}{card.cardNumber ? ` (${card.cardNumber.slice(0, 4)})` : ""}</span>
+                  <div key={key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 py-2 border-b last:border-0">
+                    <span className="text-sm font-medium break-all">{card.name}{card.cardNumber ? ` (${card.cardNumber.slice(0, 4)})` : ""}</span>
                     <div className="text-right text-sm">
-                      <span className="text-green-600 mr-3">
+                      <span className="text-green-600 sm:mr-3">
                         +{Object.entries(card.income).map(([c, a]) => formatCurrency(a, c)).join(", ") || "¥ 0.00"}
                       </span>
                       <span className="text-red-600">

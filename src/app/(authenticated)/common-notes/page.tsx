@@ -41,7 +41,7 @@ export default function CommonNotesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t("commonNote.title")}</h1>
+        <h1 className="text-xl md:text-2xl font-bold">{t("commonNote.title")}</h1>
       </div>
 
       <div className="flex gap-2 mb-6">
@@ -59,9 +59,9 @@ export default function CommonNotesPage() {
 
       <div className="space-y-2">
         {notes.map((note) => (
-          <div key={note.id} className="bg-white border rounded-lg p-4 flex items-center justify-between">
-            <p className="text-sm">{note.content}</p>
-            <button onClick={() => handleDelete(note.id)} className="px-3 py-1 text-sm border rounded text-red-500 hover:bg-red-50">
+          <div key={note.id} className="bg-white border rounded-lg p-3 sm:p-4 flex items-center justify-between gap-3">
+            <p className="text-sm flex-1 min-w-0 break-all">{note.content}</p>
+            <button onClick={() => handleDelete(note.id)} className="shrink-0 px-3 py-1 text-sm border rounded text-red-500 hover:bg-red-50">
               {t("commonNote.delete")}
             </button>
           </div>

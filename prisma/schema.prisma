@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum CardType {
+  DEBIT
+  CREDIT
+}
+
+enum TransType {
+  INCOME
+  EXPENSE
+  TRANSFER
+  EXCHANGE
+}
+
+model User {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String        @unique
+  hashedPassword String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  bankCards      BankCard[]
+  transactions   Transaction[]
+  commonNotes    CommonNote[]
+}
+
+model BankCard {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String        @db.ObjectId
+  user            User          @relation(fields: [userId], references: [id])
+  name            String
+  cardNumber      String?
+  type            CardType      @default(DEBIT)
+  currencies      String[]      @default(["CNY"])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  transactions    Transaction[]
+}
+
+model Transaction {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String     @db.ObjectId
+  user        User       @relation(fields: [userId], references: [id])
+  cardId      String?    @db.ObjectId
+  card        BankCard?  @relation(fields: [cardId], references: [id])
+  type        TransType
+  amount      Float
+  currency    String     @default("CNY")
+  dateTime    DateTime
+  note        String?
+  toCardId    String?    @db.ObjectId
+  toCardName  String?
+  exchangeRate       Float?
+  exchangeFromAmount Float?
+  exchangeFromCurrency String?
+  exchangeToAmount   Float?
+  exchangeToCurrency String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model CommonNote {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+}

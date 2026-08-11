@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tally - 记账本
+
+A personal finance tracking web application built with Next.js.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Auth:** NextAuth.js (Credentials)
+- **Database:** MongoDB Atlas
+- **ORM:** Prisma 6
+- **Deploy:** Vercel
+
+## Features
+
+- 📊 **Dashboard** — Real-time income/expense statistics with date range & card filtering
+- 💳 **Bank Card Management** — Add/edit/delete cards with per-currency setting
+- 📝 **Transaction CRUD** — Create, read, update, delete transactions
+- 🏷️ **Common Notes** — Save reusable note templates for quick select
+- 🌐 **Multi-currency** — Support for CNY, USD, JPY, EUR, GBP, HKD, KRW, SGD, THB, MYR
+- 🔐 **Authentication** — Email & password registration/login
+- 🌏 **Bilingual** — Chinese & English interface
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MongoDB Atlas account (or local MongoDB)
+
+### Setup
 
 ```bash
+# Clone the repo
+git clone <repo-url>
+cd tally
+
+# Install dependencies
+npm install
+
+# Configure environment variables
+cp .env .env.local
+# Edit .env.local with your MongoDB connection string and secrets
+
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to MongoDB
+npx prisma db push
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | MongoDB connection string |
+| `NEXTAUTH_SECRET` | Secret for JWT encryption |
+| `NEXTAUTH_URL` | App URL (http://localhost:3000 for dev) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── (authenticated)/  # Protected pages (dashboard, transactions, etc.)
+│   ├── api/              # API routes
+│   ├── login/            # Login page
+│   └── register/         # Register page
+├── components/
+│   ├── layout/           # Sidebar, Header, AuthLayout
+│   ├── SessionProvider.tsx
+│   └── LocaleProvider.tsx
+├── lib/
+│   ├── auth.ts           # NextAuth config
+│   ├── prisma.ts         # Prisma client
+│   ├── i18n.ts           # i18n config
+│   └── useTranslation.ts # Translation hook
+├── proxy.ts              # Auth middleware
+└── types/                # TypeScript types
+messages/                 # Translation files (zh.json, en.json)
+prisma/
+└── schema.prisma         # Database schema
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy to Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push code to GitHub
+2. Import project in Vercel
+3. Set environment variables:
+   - `DATABASE_URL` — your MongoDB Atlas connection string
+   - `NEXTAUTH_SECRET` — generate a random string via `openssl rand -base64 32`
+   - `NEXTAUTH_URL` — your Vercel deployment URL
+4. Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure to whitelist Vercel's IPs in MongoDB Atlas Network Access.
